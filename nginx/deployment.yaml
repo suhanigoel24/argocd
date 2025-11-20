@@ -18,21 +18,13 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: html
-              mountPath: /usr/share/nginx/html
+            - name: html-volume
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
       volumes:
-        - name: html
+        - name: html-volume
           configMap:
             name: nginx-html
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-html
-data:
-  index.html: |
-    <html>
-      <body>
-        <h1>Hello World from Suhani 🎉</h1>
-      </body>
-    </html>
+            items:
+              - key: index.html
+                path: index.html
