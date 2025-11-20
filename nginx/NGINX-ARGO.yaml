@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-demo
+  namespace: argocd            # Argo CD app CRD lives in argocd namespace (where Argo is installed)
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/suhanigoel24/argocd.git
+    path: /nginx
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: suhani
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
